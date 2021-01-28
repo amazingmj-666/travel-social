@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--360浏览器优先以webkit内核解析-->
+        <title>个人信息</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+        <link href="../../static/css/font-awesome.min93e3.css" th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet"/>
+        <link href="../../static/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+        <link href="../../static/css/style.min862f.css" th:href="@{/css/style.min862f.css}" rel="stylesheet"/>
+    </head>
+
+    <body class="gray-bg">
+        <div class="wrapper wrapper-content">
+            <div class="row animated fadeInRight">
+                <div class="col-sm-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>个人信息</h5>
+                            <div class="ibox-tools">
+
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="profile">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="javascript:edit()">修改信息</a></li>
+                                    <li><a href="javascript:resetPwd()">修改密码</a></li>
+                                    <li><a href="javascript:avatar()">修改头像</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="contact-box">
+                            <div class="col-sm-4">
+                                <div class="text-center">
+                                    <!--<img alt="image" class="img-circle m-t-xs img-responsive" th:src="@{img/profile.jpg}">-->
+                                    <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${userInfo.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${userInfo.avatar}">
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <p><i class="fa fa-user"></i> 昵称： [[${userInfo.userName}]]
+                                <p><i class="fa fa-phone"></i> 手机号: [[${userInfo.phonenumber}]]</p>
+                                <p><i class="fa fa-map-marker"></i> 所在城市： [[${userInfo.city}]] </p>
+                                <p><i class="fa fa-transgender"></i> 性别：[[${userInfo.sex}]]</p>
+                                <p><i class="fa fa-envelope-o"></i> 电子邮箱: [[${userInfo.email}]]</p>
+                                <p><i class="fa fa-calendar"></i> 生日： [[${userInfo.birthday}]]</p>
+                                <p><i class="fa fa-heart"></i> 爱好: [[${userInfo.hobby}]]</p>
+                                <p><i class="fa fa-calculator"></i> 创建时间: [[${#dates.format(userInfo.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</p></p>
+                            </div>
+                            <div class="clearfix"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:include="include_v1::footer"></div>
+        <script>
+            /*用户信息-修改*/
+            function edit() {
+                var url = ctx + 'editInfo';
+                $.modal.open("修改信息", url);
+            }
+            /*用户管理-重置密码*/
+            function resetPwd() {
+                var url = ctx + '/resetPwd';
+                $.modal.open("修改密码", url, '800', '450');
+            }
+            /*用户管理-头像*/
+            function avatar() {
+                var url = ctx + 'avatar';
+                $.modal.open("修改头像", url);
+            }
+        </script>
+    </body>
+</html>

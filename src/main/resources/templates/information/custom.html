@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:47 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+
+
+    <title>习俗</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" th:href="@{/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+
+    <link href="css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<!--<form id="search_form" method="post">-->
+    <div class="input-group">
+        <input type="text" style="width: 500px;margin-left: 250px" name="searchContent" id="searchContent" class="form-control " placeholder="请输入国家名称进行习俗查找">
+        <button class="btn btn-primary" id="search">搜 索</button>
+    </div>
+<!--</form>-->
+<div class="wrapper wrapper-content  animated fadeInRight blog">
+    <h2>推荐</h2>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox" th:each="customList:${customList}">
+                <div class="ibox-content">
+                    <a class="btn-link" th:href="@{custom_content(customId=${customList.id})}" >
+                        <h2>
+                            [[${customList.title}]]
+                        </h2>
+                    </a>
+                    <p>
+                        [[${customList.outline}]]
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>标签：</h5>
+                            <button class="btn btn-primary btn-xs"  id="custom" type="button">习俗</button>
+                            <button class="btn btn-white btn-xs" type="button">[[${customList.country}]]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<script src="js/jquery.min.js?v=2.1.4" th:href="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="js/bootstrap.min.js?v=3.3.6" th:href="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script src="js/content.min.js?v=1.0.0" th:href="@{/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/ajax/validate/jquery.validate.min.js}"></script>
+<script th:src="@{/ajax/validate/messages_zh.min.js}"></script>
+<script th:src="@{/ajax/validate/jquery.validate.extend.js}"></script>
+<!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
+<script>
+    $(document).ready(function () {
+        $("#search").click(function () {
+            var data = {};
+            data.country = $.trim($("input[name=searchContent]").val());
+            $.ajax({
+                url: ctx + "search_custom",
+                async : true,
+                type: "post",
+                datatype: "html",
+                data: data,
+                success: function (result) {
+                    if (result == 'success'){
+                        location.href = ctx + 'search_custom_result';
+                    }else{
+                        location.href = ctx + 'search_custom_null';
+                    }
+                }
+            });
+        })
+    })
+</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:47 GMT -->
+</html>

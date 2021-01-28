@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.ScenicMapper">
+    <select id="selectScenicByRandom" resultType="com.wmj.design.travelsocial.domain.information.Scenic">
+        SELECT * FROM scenic ORDER BY RAND() LIMIT 3
+    </select>
+    <select id="selectScenicListByCity" parameterType="String"
+            resultType="com.wmj.design.travelsocial.domain.information.Scenic">
+        SELECT * FROM scenic WHERE city=#{city}
+    </select>
+    <select id="selectScenicListByScenicName" parameterType="String"
+            resultType="com.wmj.design.travelsocial.domain.information.Scenic">
+        SELECT * FROM scenic WHERE scenic_name LIKE "%"#{scenicName}"%"
+    </select>
+    <select id="selectScenicById" parameterType="int"
+            resultType="com.wmj.design.travelsocial.domain.information.Scenic">
+        SELECT * FROM scenic WHERE id=#{id}
+    </select>
+</mapper>

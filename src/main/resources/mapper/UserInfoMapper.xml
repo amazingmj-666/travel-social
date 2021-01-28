@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.UserInfoMapper">
+    <insert id="insertUserInfo" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into user_info(password,phonenumber) values (#{password},#{phonenumber})
+    </insert>
+    <insert id="insertAddUserInfo" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into user_info(city,userName,email,birthday,hobby,sex) values (#{city},#{userName},#{email},#{birthday},#{hobby},#{sex})
+    </insert>
+    <update id="updateUserInfo" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo">
+        UPDATE user_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="id!=null">id=#{id},</if>
+            <if test="userName!=null">username=#{userName},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="phonenumber!=null">phonenumber=#{phonenumber},</if>
+            <if test="email!=null">email=#{email},</if>
+            <if test="city!=null">city=#{city},</if>
+            <if test="hobby!=null">hobby=#{hobby},</if>
+            <if test="createTime!=null">createtime=#{createTime},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="avatar != null and avatar != '' ">avatar = #{avatar},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+    <select id="findByPhoneNumber" parameterType="java.lang.String"  resultType="com.wmj.design.travelsocial.domain.user.UserInfo">
+      SELECT * FROM user_info WHERE phonenumber = #{phonenumber}
+    </select>
+    <select id="findByUserInfo" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo"
+            resultType="com.wmj.design.travelsocial.domain.user.UserInfo">
+      SELECT * FROM user_info WHERE phonenumber = #{phonenumber} and password = #{password}
+    </select>
+    <select id="selectUserInfoByID" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo"
+            resultType="com.wmj.design.travelsocial.domain.user.UserInfo">
+      SELECT * FROM user_info WHERE id = #{id}
+    </select>
+    <select id="selectUserInfoByUserName" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo"
+            resultType="com.wmj.design.travelsocial.domain.user.UserInfo">
+      SELECT * FROM user_info WHERE username = #{userName}
+    </select>
+    <select id="selectUserInfoByEmail" parameterType="com.wmj.design.travelsocial.domain.user.UserInfo"
+            resultType="com.wmj.design.travelsocial.domain.user.UserInfo">
+      SELECT * FROM user_info WHERE email = #{email}
+    </select>
+</mapper>

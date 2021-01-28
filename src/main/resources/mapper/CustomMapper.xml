@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.CustomMapper">
+    <select id="selectCustomByRandom" resultType="Custom">
+        SELECT * FROM custom ORDER BY RAND() LIMIT 3
+    </select>
+
+    <select id="selectCustomListByCountry" parameterType="Custom"
+            resultType="Custom">
+        SELECT * FROM custom WHERE country=#{country}
+    </select>
+
+    <select id="selectCustomById" parameterType="Custom"
+            resultType="Custom">
+        SELECT * FROM custom WHERE id=#{id}
+    </select>
+</mapper>

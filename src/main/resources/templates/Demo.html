@@ -1,0 +1,77 @@
+﻿<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>：jQuery省市区三级联动插件city-picker</title>
+
+<!--可无视-->
+<!--<link href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" type="text/css" />-->
+
+<!--必要样式-->
+<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<!--<link href="../static/css/city/bootstrap.css" th:href="@{/css/city/bootstrap.css}" rel="stylesheet" type="text/css" />-->
+<link href="../static/css/city-picker.css" th:href="@{/css/city-picker.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<!-- Content -->
+
+	<h2 class="page-header">完善资料</h2>
+<form class="wizard-big" >
+				<div id="distpicker">
+					<div class="col-sm-7">
+						<div class="form-group">
+							<label>城市 *</label>
+							<div style="position: relative;">
+								<input id="city-picker3"  readonly type="text" value="福建省/厦门市/集美区" data-toggle="city-picker" class="form-control required">
+							</div>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-warning" id="reset" type="button">重置</button>
+							<button class="btn btn-danger" id="destroy" type="button">确定</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<div class="form-group">
+						<label>昵称 *</label>
+						<input id="userName" name="userName" type="text" class="form-control required">
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<div class="form-group">
+						<label>Email *</label>
+						<input id="email" name="email" type="text" class="form-control required email">
+					</div>
+				</div>
+				<div class="col-sm-7">
+					<label>爱好 </label>
+					<textarea id="hobby" name="hobby" class="form-control" rows="3"></textarea>
+				</div>
+				<div class="col-sm-7">
+					<label>性别 *</label><br>
+					<label class="radio-inline">
+						<input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked>男
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="optionsRadiosinline" id="optionsRadios4"  value="option2">女
+					</label>
+				</div>
+				<div class="col-sm-7">
+					<button  class="btn btn-primary block" id="sub-btn">完成</button>
+					<button class="btn btn-warning" id="reset_btn" type="reset">重置</button>
+				</div>
+</form>
+<script src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!--<script src="../static/js/city/jquery.js" th:src="@{/js/city/jquery.js}"></script>
+<script src="../static/js/city/bootstrap.js" th:src="@{/js/city/bootstrap.js}"></script>-->
+<script src="../static/js/city-picker.data.js" th:src="@{/js/city-picker.data.js}"></script>
+<script src="../static/js/city-picker.js" th:src="@{/js/city-picker.js}"></script>
+<script src="../static/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="../static/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+</body>
+</html>

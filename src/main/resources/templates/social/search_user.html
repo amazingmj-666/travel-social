@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head th:include="include :: header"></head>
+<title>Title</title>
+<body class="gray-bg">
+<form id="search_form" method="post">
+    <h2>查找好友</h2><br>
+    <div class="input-group">
+        <input type="text" style="width: 400px;" name="searchContent" id="searchContent" class="form-control " placeholder="请输入昵称/手机号进行用户查找">
+    </div>
+    <br>
+    <button class="btn btn-primary" id="search">搜 索</button>
+</form>
+<div th:include="include_v1::footer"></div>
+<script th:src="@{/js/menu/search_user.js}"></script>
+</body>
+</html>

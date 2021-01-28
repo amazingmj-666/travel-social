@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/chat_view.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:48 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>好友对应的聊天窗口</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" th:href="@{/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link href="css/plugins/jsTree/style.min.css" th:href="@{/css/plugins/jsTree/style.min.css}" rel="stylesheet">
+    <link href="css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content  animated fadeInRight" >
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox chat-view">
+
+                <div class="ibox-title">
+                    与 [[${userInfo1.userName}]] 聊天中
+                </div>
+                <div class="ibox-content" >
+                    <div class="row">
+                        <div class="col-md-9 ">
+                            <div class="chat-discussion">
+                                <!--<div class="chat-message">
+                                    <img class="message-avatar" th:src="(${userInfo1.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${userInfo1.avatar}" alt="">
+                                    <div class="message">
+                                        <a class="message-author" href="#">[[${userInfo1.userName}]]</a>
+                                        <span class="message-date"> 2015-02-02 18:39:23 </span>
+                                        <span class="message-content">
+											H+ 是个好框架
+                                            </span>
+                                    </div>
+                                </div>-->
+                                <!--<div class="chat-message">
+                                    <img class="message-avatar" th:src="(${userInfo2.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${userInfo2.avatar}" alt="">
+                                    <div class="message">
+                                        <a class="message-author" href="#"> [[${userInfo2.userName}]] </a>
+                                        <span class="message-date">  2015-02-02 11:12:36 </span>
+                                        <span id="con" class="message-content">
+                                            </span>
+                                        <div id="content"></div>
+                                    </div>
+                                </div>-->
+                                <h2 id="content"></h2>
+                            </div>
+                        </div>
+                        <div class="col-md-3" >
+                            <div class="chat-users" >
+                                <div class="users-list">
+                                    <div class="chat-user" th:each="list:${userList}">
+                                        <img class="chat-avatar" th:src="(${list.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${list.avatar}" alt="">
+                                        <div class="chat-user-name">
+                                            <a th:href="@{change_view(userId=${list.id})}">[[${list.userName}]]</a>
+                                        </div>
+                                    </div>
+                                    <!--<div class="chat-user">
+                                        <span class="pull-right label label-primary">在线</span>
+                                        <img class="chat-avatar" src="img/a3.jpg" alt="">
+                                        <div class="chat-user-name">
+                                            <a href="#">ZM敏姑娘	</a>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="chat-message-form">
+                                <div class="form-group">
+                                    <input id="toUserId" th:value="${userInfo1.id}" type="hidden">
+                                    <input id="fromUserId" th:value="${userInfo2.id}" type="hidden">
+                                    <input id="userName" th:value="${userInfo2.userName}" type="hidden">
+                                    <textarea class="form-control message-input" rows="2" name="message" id="message" placeholder="输入消息内容"></textarea>
+                                    <button class="btn btn-primary" style="width: 1000px" id="search" onclick="send()">发送</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script src="js/content.min.js?v=1.0.0" th:src="@{/js/content.min.js?v=1.0.0}"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script>
+    var websocket = null;
+    connectWebSocket();
+    function connectWebSocket() {
+        var toUserId = document.getElementById("toUserId").value;
+        var fromUserId = document.getElementById("fromUserId").value;
+        var userName = document.getElementById("userName").value;
+        //判断当前浏览器是否支持WebSocket
+        if ('WebSocket'in window) {
+            websocket = new WebSocket("ws://localhost:8080/travelsocial/websocket/"+fromUserId+"/"+toUserId+"/"+userName);
+        } else {
+            alert('Not support websocket')
+        }
+        //连接发生错误的回调方法
+        websocket.onerror = function() {
+            setMessageInnerHTML("系统消息：error");
+        };
+        //连接成功建立的回调方法
+        websocket.onopen = function(event) {
+            /*setMessageInnerHTML("Loc MSG: 成功建立连接");*/
+        }
+        //接收到消息的回调方法
+        websocket.onmessage = function(event) {
+            setMessageInnerHTML(event.data);
+        }
+        //连接关闭的回调方法
+        websocket.onclose = function() {
+            /*setMessageInnerHTML("Loc MSG:关闭连接");*/
+        }
+        //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function() {
+            websocket.close();
+        }
+    }
+    //将消息显示在网页上
+    function setMessageInnerHTML(innerHTML) {
+        document.getElementById('content').innerHTML += innerHTML + '<br/>';
+    }
+
+    function send() {
+        var message = document.getElementById("message").value;
+        var toUser = document.getElementById("toUserId").value;
+        var socketMsg = {msg:message,toUser:toUser};
+        socketMsg.type=1;
+        socketMsg.fromUser = document.getElementById("fromUserId").value;
+        websocket.send(JSON.stringify(socketMsg));
+        document.getElementById("message").value="";
+    }
+
+</script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/chat_view.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:48 GMT -->
+</html>

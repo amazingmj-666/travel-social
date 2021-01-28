@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.ScenicImageMapper">
+    <select id="selectScenicImageByScenicId" parameterType="int"
+            resultType="com.wmj.design.travelsocial.domain.information.ScenicImage">
+        SELECT * FROM scenic_image WHERE scenic_id=#{scenicId}
+    </select>
+</mapper>

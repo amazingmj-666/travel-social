@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>搜索结果</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../../static/css/font-awesome.min93e3.css" th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet"/>
+    <link href="../../static/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet"/>
+    <link href="../../static/css/style.min862f.css" th:href="@{/css/style.min862f.css}" rel="stylesheet"/>
+    <link href="../../static/css/plugins/sweetalert/sweetalert.css" th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+</head>
+<style>
+    .sa {
+        width: 20em;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+    }
+</style>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户信息</h5>
+                    </div>
+                    <div class="contact-box">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <!--<img alt="image" class="img-circle m-t-xs img-responsive" th:src="@{img/profile.jpg}">-->
+                                <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${userInfo.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${userInfo.avatar}">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <input name="userId"  type="hidden"  th:field="*{userInfo.id}" />
+                            <p><i class="fa fa-user"></i> 昵称： [[${userInfo.userName}]]</p>
+                            <p><i class="fa fa-phone"></i> 手机号: [[${userInfo.phonenumber}]]</p>
+                            <p><i class="fa fa-map-marker"></i> 所在城市： [[${userInfo.city}]] </p>
+                            <p><i class="fa fa-transgender"></i> 性别：[[${userInfo.sex}]]</p>
+                            <p><i class="fa fa-heart"></i> 爱好: [[${userInfo.hobby}]]</p>
+                        </div>
+                        <button  class="btn btn-primary block full-width m-b" id="send_application" data-toggle="modal" data-target="#myModal">发送申请</button>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width:350px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">添加好友</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${userInfo.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${userInfo.avatar}">
+                        </div>
+                    </div>
+                    <div>
+                        <input name="userId" id="userId"  type="hidden"  th:field="*{userInfo.id}" th:value="${userInfo.id}"/>
+                        <p><i class="fa fa-user"></i>昵称： [[${userInfo.userName}]]</p>
+                        <p><i class="fa fa-phone"></i> 手机号: [[${userInfo.phonenumber}]]</p>
+                        <p><i class="fa fa-transgender"></i> 性别：[[${userInfo.sex}]]</p>
+                        <textarea id="application_info" name="message" placeholder="请填写您的验证消息" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="confirm">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div th:include="include_v1::footer"></div>
+<script>
+    $("#confirm").click(function(){
+    var data = {};
+    var userId = document.getElementById("userId").value;
+    data.userId = userId;
+    data.message = $.trim($("textarea[name=message]").val());
+    $.ajax({
+        url: ctx+"add_friend_application",
+        async : true,
+        type: "post",
+        data: data,
+        success: function (result) {
+            if(result == 'success') {
+                swal({
+                    title:"",
+                    text: "发送申请成功",
+                    type:"success",
+                    customClass: "sa"
+                },function(isConfirm){
+                    location.href = ctx + 'search_user';
+                });
+            }
+            if(result == 'applicationIsExist') {
+                swal({
+                    title:"",
+                    text: "该好友申请已经存在，不能重复添加",
+                    type:"warning",
+                    customClass: "sa"
+                },function(isConfirm){
+                    location.href = ctx + 'search_user';
+                });
+            }
+            if(result == 'friendIsExist') {
+                swal({
+                    title:"",
+                    text: "你们已经是好友了，不能重复添加",
+                    type:"warning",
+                    customClass: "sa"
+                },function(isConfirm){
+                    location.href = ctx + 'search_user';
+                });
+            }
+            if (result == 'error'){
+                swal({
+                    title:"",
+                    text: "发送申请失败",
+                    type:"error",
+                    customClass: "sa"
+                },function(isConfirm){
+                    location.href = ctx + 'search_user';
+                });
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>

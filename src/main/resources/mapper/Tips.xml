@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.TipsMapper">
+    <!--<insert id="insertDynamics" parameterType="com.wmj.design.travelsocial.domain.social.Dynamics"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into dynamics(user_id,content) values (#{userId},#{content})
+    </insert>-->
+    <select id="selectTipsList" resultType="com.wmj.design.travelsocial.domain.information.Tips">
+        SELECT * FROM tips order by create_time desc
+    </select>
+</mapper>

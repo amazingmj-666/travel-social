@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<head th:include="include :: header"></head>-->
+<meta charset="UTF-8">
+<title>Title</title>
+<link  th:href="@{/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+<link  th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+<link  th:href="@{/css/animate.min.css}" rel="stylesheet">
+<link  th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+<link  th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+<body class="gray-bg">
+<style>
+    .sa {
+        width: 20em;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight" id="applicationList" th:each="list:${userList}">
+    <div class="row">
+        <div class="col-sm-5" >
+            <div class="contact-box" id="friend_application" >
+                <!--<a href="profile" >-->
+                    <div class="col-sm-4">
+                        <div class="text-center">
+                            <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${list.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${list.avatar}">
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <!--<input name="applicationId" id="applicationId"  type="hidden" th:value="${list.id}"/>-->
+                        <h3><strong>昵称:[[${list.userName}]]</strong></h3>
+                        <strong>城市:[[${list.city}]]</strong>
+                        <address>
+                            <small>E-mail:[[${list.email}]]</small><br>
+                            <small>Tel:[[${list.phonenumber}]]</small><br>
+                            <strong>性别:[[${list.sex}]]</strong><br>
+                            <h4>备注信息:[[${list.hobby}]]</h4>
+                            <h5>申请时间:[[${#dates.format(list.createTime, 'yyyy-MM-dd HH:mm:ss')}]]</h5>
+                        </address>
+
+                    </div>
+                    <div>
+                        <button class="btn-primary" id="agree" th:data-application="${list.id}" style="margin-right:90px;margin-left: 80px">同意</button>
+                        <button class="btn-danger" id="refuse" th:data-application="${list.id}">拒绝</button>
+                    </div>
+                    <div class="clearfix"></div>
+                <!--</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<!--<script>
+    $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
+</script>-->
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script>
+    $(document).ready(function(){
+        $(".btn-primary").click(function(){
+            var data = {};
+            var applicationId = $(this).data("application");
+            data.applicationId = applicationId;
+            $.ajax({
+                url : ctx + "add_friend",
+                async : true,
+                type : "post",
+                data : data,
+                success:function (result) {
+                    if (result == "agree") {
+                        swal({
+                            title:"",
+                            text:"已同意该好友申请",
+                            type:"success",
+                            customClass: "sa"
+                        },function(isConfirm){
+                            location.href = ctx + 'friend_application';
+                        });
+                    }
+                    if(result == "error"){
+                        swal({
+                            title:"",
+                            text: "系统出现错误",
+                            type:"error",
+                            customClass: "sa"
+                        });
+                    }
+                }
+            })
+        });
+
+        $(".btn-danger").click(function(){
+            var data = {};
+            var applicationId = $(this).data("application");
+            data.applicationId = applicationId;
+            swal({
+                    title:"",
+                    text:"您确定要拒绝该好友申请？",
+                    type:"warning",
+                    showCancelButton:true,
+                    confirmButtonText:"确定拒绝",
+                    cancelButtonText:"取消",
+                    closeOnConfirm:false,
+                    closeOnCancel:false
+                },function (isConfirm) {
+                    if (isConfirm){
+                        $.ajax({
+                            url: ctx + "refuse_friend_application",
+                            async : true,
+                            data: data,
+                            type: "post",
+                            success: function(result) {
+                                if (result == "success"){
+                                    swal({
+                                        title:"",
+                                        text:"已拒绝该好友申请",
+                                        type:"success",
+                                        customClass: "sa"
+                                    },function(isConfirm){
+                                        location.href = ctx + 'friend_application';
+                                    });
+                                }
+                                if (result == "error"){
+                                    swal({
+                                        title:"",
+                                        text:"拒绝好友申请失败",
+                                        type:"error",
+                                        customClass: "sa"
+                                    },function(isConfirm){
+                                        location.href = ctx + 'friend_application';
+                                    });
+                                }
+                            }
+                        })
+                    }else{
+                        swal({
+                            title:"",
+                            text:"您取消了拒绝操作",
+                            type:"success",
+                            customClass: "sa"
+                        })
+                    }
+                }
+            )
+        });
+
+        $(".contact-box").each(function(){
+            animationHover(this,"pulse")
+        });
+
+
+    });
+</script>
+</body>
+</html>

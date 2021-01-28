@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.DynamicsImageMapper">
+    <insert id="insertDynamicsImage" parameterType="com.wmj.design.travelsocial.domain.social.DynamicsImage"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into dynamics_image_route(dynamics_id,image_route) values (#{dynamicsId},#{imageRoute})
+    </insert>
+    <update id="updateDynamicsImageByDynamicsId" parameterType="int">
+        UPDATE dynamics_image_route set dynamics_id=#{dynamicsId} WHERE dynamics_id=#{userId}
+    </update>
+    <select id="selectDynamicsImageList" parameterType="int"
+            resultType="com.wmj.design.travelsocial.domain.social.DynamicsImage">
+        SELECT * FROM dynamics_image_route WHERE dynamics_id = #{dynamicsId}
+    </select>
+    <delete id="deleteDynamicsImage" parameterType="int">
+        delete from dynamics_image_route where dynamics_id = #{dynamicsId}
+    </delete>
+</mapper>

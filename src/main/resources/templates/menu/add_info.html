@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>完善信息</title>
+
+
+        <!--必要样式-->
+        <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+        <link href="../../static/css/font-awesome.min93e3.css?v=4.4.0" th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+        <link href="../../static/css/plugins/datapicker/datepicker3.css" th:href="@{/css/plugins/datapicker/datepicker3.css}" rel="stylesheet">
+        <link href="../../static/css/city-picker.css" th:href="@{/css/city-picker.css}" rel="stylesheet" type="text/css" />
+        <link href="../../static/css/style.min862f.css?v=4.1.0" th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+        <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+    </head>
+    <style>
+        .sa {
+            width: 20em;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+        }
+    </style>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h2 class="page-header">完善资料</h2>
+            <form id="form" method="post">
+                <div id="distpicker">
+                    <div class="form-group">
+                        <label>城市 *</label>
+                        <div style="position: relative;">
+                            <input id="city" name="city"  readonly type="text" value="福建省/厦门市/集美区" data-toggle="city-picker" class="form-control required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-danger" id="destroy" type="button">确定</button>
+                        <button class="btn btn-warning" id="reset" type="button">重置</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>昵称 *</label>
+                    <input id="userName" name="userName" type="text" placeholder="请输入昵称" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input id="email" name="email" type="text" placeholder="请输入邮箱地址" class="form-control required email">
+                </div>
+                <div class="form-group" id="data_1">
+                    <label >生日 *</label>
+                    <div class="input-group date">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" class="form-control" name="birthday" id="birthday" value="2000-01-01">
+                    </div>
+                </div>
+                <div >
+                    <label>爱好 </label>
+                    <textarea id="hobby" name="hobby" placeholder="请填写您的爱好，比如：喜欢唱，跳，rap，篮球" class="form-control" rows="3"></textarea>
+                </div>
+                <div>
+                    <label>性别 *</label><br>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" id="man" value="1" checked>男
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" id="woman"  value="0">女
+                    </label>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary block" id="sub-btn">完成</button>
+                    <!--<button class="btn btn-warning" id="reset_btn" type="reset">重置</button>-->
+                </div>
+            </form>
+        </div>
+    </div>
+        <!-- Content -->
+    <script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+   <script src="../../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+   <script src="../../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+   <script src="../../static/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+   <script src="../../static/js/menu/add_info.js" th:src="@{/js/menu/add_info.js}"></script>
+   <script src="../../static/js/plugins/datapicker/bootstrap-datepicker.js" th:src="@{/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+   <script src="../../static/js/city-picker.data.js" th:src="@{/js/city-picker.data.js}"></script>
+   <script src="../../static/js/city-picker.js" th:src="@{/js/city-picker.js}"></script>
+   <script src="../../static/js/main.js" th:src="@{/js/main.js}"></script>
+   <script src="../../static/js/plugins/cropper/cropper.min.js" th:src="@{/js/plugins/cropper/cropper.min.js}"></script>
+   <script src="../../static/js/demo/form-advanced-demo.min.js" th:src="@{/js/demo/form-advanced-demo.min.js}"></script>
+   <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+</body>
+</html>

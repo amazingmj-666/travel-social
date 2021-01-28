@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的动态</title>
+    <link rel="shortcut icon" href="favicon.ico" >
+    <link  th:href="@{/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link  th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link  th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link  th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet"/>
+</head>
+<style>
+    .sa {
+        width: 20em;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight" th:each="list:${dynamicsList}">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="social-feed-box">
+                <div class="pull-right social-action dropdown">
+                    <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                        <i class="fa fa-angle-down"></i>
+                    </button>
+                    <ul class="dropdown-menu m-t-xs">
+                        <li><a class="delete" th:data-dynamics="${list.id}" th:attr="data-dynamicsId=${list.id}">删除</a></li>
+                    </ul>
+                </div>
+                <div class="social-avatar">
+                    <a href="#" class="pull-left">
+                        <img alt="image" th:src="(${list.userInfo.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${list.userInfo.avatar}" >
+                    </a>
+                    <div class="media-body">
+                        <a href="#">
+                            [[${list.userInfo.userName}]]
+                        </a>
+                        <small class="text-muted">[[${#dates.format(list.createTime, 'MM-dd HH:mm:ss')}]]</small>
+                        <!--<small class="text-muted">[[${list.id}]]</small>-->
+                    </div>
+                </div>
+                <div class="social-body">
+                    <!--<input type="hidden"  th:value="${list.id}" id="dynamics" name="dynamics">-->
+                    <p>
+                        [[${list.content}]]
+                    </p>
+                    <div style="display: inline-block" th:each="imgList:${list.image}">
+                        <img style="height: 190px;width: 220px;display: inline-block" th:src=" @{/profile/upload/} + ${imgList.imageRoute}" class="img-responsive">
+                    </div><br>
+                    <!--<div class="btn-group">
+                        <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> 赞</button>
+                        <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> 评论</button>
+                    </div>-->
+                </div>
+                <!--<div class="social-footer">
+                    <div class="social-comment">
+
+                        <div class="media-body">
+                            <a href="#">
+                                尤小右
+                            </a> 主页君自己买的电子版，早知道就。。。
+                            <br/>
+                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11</a> -
+                            <small class="text-muted">8月18日</small>
+                        </div>
+                    </div>
+                    <div class="social-comment">
+                        <a href="#" class="pull-left">
+                            <img alt="image" src="img/a3.jpg">
+                        </a>
+                        <div class="media-body">
+                            <textarea class="form-control" placeholder="填写评论..."></textarea>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+<script th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+<script th:src="@{/js/content.min.js?v=1.0.0}"></script>
+<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<script>
+    $(document).ready(function(){
+        $(".delete").click(function () {
+            var data = {};
+            var dynamicsId = $(this).data("dynamics");
+            data.dynamicsId = dynamicsId;
+            swal({
+                    title:"",
+                    text:"您确定要删除该动态吗？",
+                    type:"warning",
+                    showCancelButton:true,
+                    confirmButtonText:"确定删除",
+                    cancelButtonText:"取消",
+                    closeOnConfirm:false,
+                    closeOnCancel:false
+                },function (isConfirm) {
+                    if (isConfirm){
+                        $.ajax({
+                            url: ctx + "delete_dynamics",
+                            async : true,
+                            data: data,
+                            type: "post",
+                            success: function(result) {
+                                if (result == "success"){
+                                    swal({
+                                        title:"",
+                                        text:"删除动态成功",
+                                        type:"success",
+                                        customClass: "sa"
+                                    },function(){
+                                        location.href = ctx + 'my_dynamics';
+                                    });
+                                }
+                                if (result == "error"){
+                                    swal({
+                                        title:"",
+                                        text:"删除动态失败",
+                                        type:"error",
+                                        customClass: "sa"
+                                    },function(){
+                                        location.href = ctx + 'my_dynamics';
+                                    });
+                                }
+                            }
+                        })
+                    }else{
+                        swal({
+                            title:"",
+                            text:"您取消了删除操作",
+                            type:"success",
+                            customClass: "sa"
+                        })
+                    }
+                }
+            )
+            /*$.ajax({
+                url: ctx + "delete_dynamics",
+                async : true,
+                data: data,
+                type: "post",
+                success: function(result) {
+                    if (result == "success"){
+                        swal({
+                            title:"",
+                            text:"删除动态成功",
+                            type:"success",
+                            customClass: "sa"
+                        },function(isConfirm){
+                            location.href = ctx + 'my_dynamics';
+                        });
+                    }
+                    if (result == "error"){
+                        swal({
+                            title:"",
+                            text:"删除动态失败",
+                            type:"error",
+                            customClass: "sa"
+                        },function(isConfirm){
+                            location.href = ctx + 'my_dynamics';
+                        });
+                    }
+                }
+            })*/
+        })
+
+    });
+
+</script>
+</body>
+</html>

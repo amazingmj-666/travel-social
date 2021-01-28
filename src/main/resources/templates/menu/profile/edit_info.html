@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<meta charset="utf-8">
+<!--head th:include="include :: header"></head>-->
+<link href="../../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link href="../../../static/css/font-awesome.min93e3.css?v=4.4.0" th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+<link href="../../../static/css/plugins/datapicker/datepicker3.css" th:href="@{/css/plugins/datapicker/datepicker3.css}" rel="stylesheet">
+<link href="../../../static/css/city-picker.css" th:href="@{/css/city-picker.css}" rel="stylesheet" type="text/css" />
+<link href="../../../static/css/style.min862f.css?v=4.1.0" th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-user-editinfo" method="post">
+        <div id="distpicker">
+            <div class="form-group">
+                <label>城市 *</label>
+                <div style="position: relative;">
+                    <input id="city" name="city"  readonly type="text" th:value="${userInfo.city}" data-toggle="city-picker" class="form-control required">
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger" id="destroy" type="button">确定</button>
+                <button class="btn btn-warning" id="reset" type="button">重置</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>昵称 *</label>
+            <input id="userName" name="userName" type="text" placeholder="请输入昵称（2-8个字" th:value="${userInfo.userName}" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Email *</label>
+            <input id="email" name="email" type="text" placeholder="请输入邮箱地址" th:value="${userInfo.email}" class="form-control required email">
+        </div>
+        <div class="form-group" id="data_1">
+            <label>生日 *</label>
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="text" class="form-control" name="birthday" id="birthday" th:value="${userInfo.birthday}">
+            </div>
+        </div>
+        <div >
+            <label>爱好 </label>
+            <textarea id="hobby" name="hobby" placeholder="请填写您的爱好，比如：喜欢唱，跳，rap，篮球" class="form-control" rows="3">[[${userInfo.hobby}]]
+            </textarea>
+        </div>
+        <div >
+            <label>性别 *</label><br>
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="man" value="1" checked>男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="woman"  value="0">女
+            </label>
+        </div>
+    </form>
+</div>
+<div th:include="include :: footer"></div>
+<script>
+    $("#form-user-editinfo").validate({
+        rules:{
+            userName:{
+                required:true,
+                minlength: 2,
+                maxlength: 8,
+                remote: {
+                    url: ctx + "/checkUserName",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        userName: function() {
+                            return $("input[name='userName']").val();
+                        }
+                    }
+                }
+            },
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: ctx + "/checkEmail",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        email: function() {
+                            return $("input[name='email']").val();
+                        }
+                    }
+                }
+            }
+        },
+        messages: {
+            userName: {
+                required: "请输入昵称",
+                minlength: "昵称不能小于2个字符",
+                maxlength: "昵称不能大于8个字符",
+                remote: "该昵称已被使用"
+            },
+            email: {
+                required: "请输入邮箱",
+                remote:"该邮箱已被使用"
+            }
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(ctx + "editInfo", $('#form-user-editinfo').serialize());
+        }
+    }
+</script>
+</body>
+
+</html>

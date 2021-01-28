@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/basic_gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:06 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>景点详细信息</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" th:href="@{/css/bootstrap.min14ed.css?v=3.3.6}" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" th:href="@{/css/font-awesome.min93e3.css?v=4.4.0}" rel="stylesheet">
+    <link href="js/plugins/fancybox/jquery.fancybox.css" th:href="@{/js/plugins/fancybox/jquery.fancybox.css}" rel="stylesheet">
+    <link href="css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" th:href="@{/css/style.min862f.css?v=4.1.0}" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content" >
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins" >
+                <div class="ibox-title">
+                    <h5>景点图片查看</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" >
+                    <a class="fancybox" th:each="scenicImageList:${scenicImageList}" th:href="${scenicImageList.imageRoute}">
+                        <img style="height: 170px;width:230px "  alt="image" th:src="${scenicImageList.imageRoute}" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox" th:each="scenic:${scenic}">
+                <div class="ibox-content">
+                    <a class="btn-link">
+                        <h2>
+                            <i class="fa fa-university"></i><strong>[[${scenic.scenicName}]]</strong>
+                        </h2>
+                    </a>
+                    <p>
+                        <i class="fa fa-map-marker"></i> [[${scenic.address}]]
+                    </p>
+                    <p>
+                    <h3>介绍：<h4 >[[${scenic.scenicIntroduce}]]</h4></h3>
+                    </p>
+                    <p>
+                    <h3>票价：<h4 style="color: red;">[[${scenic.ticketPrice}]]</h4></h3>
+                    </p>
+                    <p>
+                    <h3>开放时间：<h4>[[${scenic.openTime}]]</h4></h3>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="wrapper wrapper-content  animated fadeInRight blog">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="ibox" th:each="scenic:${scenic}">
+                <div class="ibox-content">
+                    <a class="btn-link">
+                        <h2>
+                            <i class="fa fa-university"></i> [[${scenic.scenicName}]]
+                        </h2>
+                    </a>
+                    <p>
+                        <i class="fa fa-map-marker"></i> [[${scenic.address}]]
+                    </p>
+                    <p>
+                    <h3>介绍：<h4 >[[${scenic.scenicIntroduce}]]</h4></h3>
+                    </p>
+                    <p>
+                    <h3>票价：<h4 style="color: red;">[[${scenic.ticketPrice}]]</h4></h3>
+                    </p>
+                    <p>
+                    <h3>开放时间：<h4>[[${scenic.openTime}]]</h4></h3>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/content.min.js?v=1.0.0"></script>
+<script src="js/plugins/fancybox/jquery.fancybox.js"></script>
+<script>
+    $(document).ready(function(){$(".fancybox").fancybox({openEffect:"none",closeEffect:"none"})});
+</script>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/basic_gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:18 GMT -->
+</html>

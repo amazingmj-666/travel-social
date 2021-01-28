@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmj.design.travelsocial.dao.FriendMapper">
+    <insert id="insertFriend" parameterType="com.wmj.design.travelsocial.domain.social.Friend"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT into friend(application_id,be_add_id) values (#{applicationId},#{beAddId})
+    </insert>
+    <select id="selectFriendIsExist" parameterType="com.wmj.design.travelsocial.domain.social.Friend"
+            resultType="com.wmj.design.travelsocial.domain.social.Friend">
+      SELECT * FROM friend WHERE application_id = #{applicationId} and be_add_id = #{beAddId}
+      or application_id = #{beAddId} and be_add_id = #{applicationId}
+    </select>
+    <select id="selectFriendList" parameterType="int"
+            resultType="com.wmj.design.travelsocial.domain.social.Friend">
+        SELECT * FROM friend WHERE be_add_id = #{userId} or application_id = #{userId}
+    </select>
+</mapper>
