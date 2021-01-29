@@ -69,7 +69,6 @@ public class LoginController {
                 String uuId = UUIDUtil.getUUID();
                 String loginKey = KeyUtil.getLoginSuccessRedisKey(phonenumber);
                 System.out.println("登录成功的key为:" + loginKey);
-
                 String sessionId = KeyUtil.getSessionId(phonenumber, uuId);
                 System.out.println("登录成功的sessionId为:" + sessionId);
                 RedisUtil.set(loginKey, sessionId);
