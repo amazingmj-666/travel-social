@@ -11,17 +11,19 @@ import java.util.List;
 
 @Controller
 public class TipsController {
+
     @Autowired
     TipsService tipsService;
+
     @GetMapping("/tips")
     public String tips(ModelMap mmap){
         try{
             List<Tips> tipsList = tipsService.selectTipsList();
             mmap.put("tipsList",tipsList);
-            return "/information/tips";
+            return "information/tips";
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/404";
+            return "fail/404";
         }
     }
 }

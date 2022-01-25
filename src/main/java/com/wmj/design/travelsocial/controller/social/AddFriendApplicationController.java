@@ -28,6 +28,7 @@ import java.util.List;
  */
 @Controller
 public class AddFriendApplicationController {
+
     @Autowired
     FriendApplicationService friendApplicationService;
     @Autowired
@@ -37,7 +38,7 @@ public class AddFriendApplicationController {
 
     @GetMapping("/add_friend")
     public  String addFriend(){
-        return "/social/add_friend";
+        return "social/add_friend";
     }
 
     @GetMapping("/friend_application")
@@ -50,7 +51,7 @@ public class AddFriendApplicationController {
         friendApplication.setStatus("0");
         List<FriendApplication> lists  = friendApplicationService.selectFriendApplicationList(friendApplication);
         if (lists.isEmpty()){
-            return "/fail/no_friend_application";
+            return "fail/no_friend_application";
         }else{
             for(int i = 0;i<lists.size();i++){
                 int applicationId = lists.get(i).getApplicationId();
@@ -62,7 +63,7 @@ public class AddFriendApplicationController {
             }
             mmap.put("userList",userList);
             mmap.put("lists",lists);
-            return "/social/friendApplication/friend_application";
+            return "social/friendApplication/friend_application";
         }
     }
 

@@ -29,15 +29,17 @@ import java.util.List;
 @Slf4j
 @Controller
 public class DynamicsController {
+
     @Autowired
     DynamicsService dynamicsService;
     @Autowired
     DynamicsImageService dynamicsImageService;
     @Autowired
     UserInfoService userInfoService;
+
     @GetMapping("/release_dynamics")
     public String releaseDynamics(){
-        return "/social/dynamics/release_dynamics";
+        return "social/dynamics/release_dynamics";
     }
 
     @GetMapping("/my_dynamics")
@@ -47,7 +49,7 @@ public class DynamicsController {
         try{
             List<Dynamics> dynamicsList = dynamicsService.selectDynamicsList(userId);
             if (dynamicsList.isEmpty()){
-                return "/fail/no_dynamics";
+                return "fail/no_dynamics";
 
             }else{
                 UserInfo userInfo = userInfoService.selectUserInfoByID(userId);
@@ -58,11 +60,11 @@ public class DynamicsController {
                     dynamicsList.get(i).setUserInfo(userInfo);
                 }
                 mmap.put("dynamicsList",dynamicsList);
-                return "/social/dynamics/my_dynamics";
+                return "social/dynamics/my_dynamics";
             }
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
 

@@ -4,13 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.wmj.design.travelsocial.utils.KeyUtil;
 import com.wmj.design.travelsocial.utils.RedisUtil;
 import com.zhenzi.sms.ZhenziSmsClient;
-import org.omg.CORBA.ObjectHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -22,6 +20,7 @@ import java.util.Random;
  */
 @Controller
 public class SendSmsController {
+
     @RequestMapping("/sendSms")
     @ResponseBody
     public Object sendSms(HttpServletRequest request,String phonenumber){
@@ -41,7 +40,6 @@ public class SendSmsController {
             String result = client.send(paramMap);
             JSONObject json = JSONObject.parseObject(result);
             if(json.getIntValue("code") != 0){
-                System.out.println("发送失败");
                 msg = "sendfail";
                 return msg;
             }

@@ -15,19 +15,21 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 @Controller
 public class FoodController {
+
     @Autowired
     FoodService foodService;
     @Autowired
     FoodImageService foodImageService;
+
     @GetMapping("/food")
     public String food(ModelMap mmap){
         try{
             List<Food> foodList = foodService.selectFoodByRandom();
             mmap.put("foodList",foodList);
-            return "/information/food/food";
+            return "information/food/food";
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
     @GetMapping("/detailed_food")
@@ -37,17 +39,17 @@ public class FoodController {
             Food food = foodService.selectFoodById(foodId);
             mmap.put("foodImageList",foodImageList);
             mmap.put("food",food);
-            return "/information/food/detailed_food";
+            return "information/food/detailed_food";
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
     @GetMapping("search_food_result")
     public String searchScenicResult(HttpSession session,ModelMap mmap){
         List<Food> foodList = (List<Food>) session.getAttribute("foodList");
         mmap.put("foodList",foodList);
-        return "/information/food/search_food_result";
+        return "information/food/search_food_result";
     }
 
     @RequestMapping("search_food")

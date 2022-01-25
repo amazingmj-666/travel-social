@@ -27,6 +27,7 @@ import java.util.List;
 
 @Controller
 public class FriendsCircleController {
+
     @Autowired
     UserInfoService userInfoService;
     @Autowired
@@ -35,6 +36,7 @@ public class FriendsCircleController {
     DynamicsService dynamicsService;
     @Autowired
     DynamicsImageService dynamicsImageService;
+
     @GetMapping("/friends_circle")
     public String friendsCircle(HttpSession session, ModelMap mmap){
         int id = userInfoService.selectIdByPhoneNumber(session);
@@ -47,7 +49,7 @@ public class FriendsCircleController {
         List<DynamicsImage> dynamicsImageList;
         try{
             if(friendList.isEmpty()){
-                return "/fail/no_friend";
+                return "fail/no_friend";
             }else{
                 for (int i =0;i<friendList.size();i++){
                     if(friendList.get(i).getApplicationId() == id ){
@@ -79,11 +81,11 @@ public class FriendsCircleController {
                 //按照动态发布时间进行降序排序（最新动态显示在最前面）
                 Collections.sort(dynamicsAllList,sortUtils);
                 mmap.put("dynamicsAllList",dynamicsAllList);
-                return "/social/friendscircle/friends_circle";
+                return "social/friendscircle/friends_circle";
             }
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
 

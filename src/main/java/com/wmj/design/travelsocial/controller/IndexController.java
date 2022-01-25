@@ -21,10 +21,12 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class IndexController {
+
     @Autowired
     UserInfoService userInfoService;
     @Autowired
     FriendApplicationService friendApplicationService;
+
     @GetMapping("/index")
     public String index(HttpSession session, ModelMap mmap){
         if (session.getAttribute("phonenumber") == null){

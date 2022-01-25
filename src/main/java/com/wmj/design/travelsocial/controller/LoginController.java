@@ -32,6 +32,7 @@ public class LoginController {
 
     @Autowired
     UserInfoService userInfoService;
+
     @GetMapping("/login")
     public String loginHtml(){
         return "login";

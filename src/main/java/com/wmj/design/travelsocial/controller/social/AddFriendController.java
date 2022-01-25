@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class AddFriendController {
+
     @Autowired
     DataSourceTransactionManager transactionManager;
     @Autowired

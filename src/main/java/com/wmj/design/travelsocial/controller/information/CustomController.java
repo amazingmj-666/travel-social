@@ -14,17 +14,19 @@ import java.util.List;
 
 @Controller
 public class CustomController {
+
     @Autowired
     CustomService customService;
+
     @GetMapping("/custom")
     public String custom(ModelMap mmap){
         try{
             List<Custom> customList = customService.selectCustomByRandom();
             mmap.put("customList",customList);
-            return "/information/custom";
+            return "information/custom";
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
     @GetMapping("/custom_content")
@@ -33,13 +35,13 @@ public class CustomController {
         custom.setId(customId);
         custom =customService.selectCustomById(custom);
         mmap.put("custom",custom);
-        return "/information/custom_content";
+        return "information/custom_content";
     }
     @GetMapping("/search_custom_result")
     public String searchCustom(HttpSession session, ModelMap mmap){
         List<Custom> customList = (List<Custom>) session.getAttribute("customList");
         mmap.put("customList",customList);
-        return "/information/custom/search_result";
+        return "information/custom/search_result";
     }
 
 

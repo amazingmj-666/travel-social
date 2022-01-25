@@ -14,11 +14,13 @@ import javax.jws.soap.SOAPBinding;
 
 @Controller
 public class SearchUserController {
+
     @Autowired
     UserInfoService userInfoService;
+
     @GetMapping("/search_user")
     public String searchUser(){
-        return "/social/search_user";
+        return "social/search_user";
     }
 
     @RequestMapping("/search_user")
@@ -31,7 +33,7 @@ public class SearchUserController {
                 UserInfo ui2 = userInfoService.selectUserInfoByUserName(searchContent);
                 if (StringUtils.isEmpty(ui2)){
                     //两次都没查找，返回到“查无此人”的界面
-                    return "/fail/search_null";
+                    return "fail/search_null";
                 }else{
                     UsetInfoJudge.userInfoJudge(ui2);
                     //把用户信息传递到前端进行显示
@@ -42,10 +44,10 @@ public class SearchUserController {
                 mmap.put("userInfo",ui1);
             }
             //跳转到查找结果页面，进行用户信息显示
-            return "/social/search_user_result";
+            return "social/search_user_result";
         }catch(Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
 }

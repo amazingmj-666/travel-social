@@ -24,14 +24,16 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 public class ProfileController extends BaseController {
+
     @Autowired
     UserInfoService userInfoService;
+
     @GetMapping("/resetPwd")
     public String resetPwd(HttpSession session,ModelMap mmap){
         int id = userInfoService.selectIdByPhoneNumber(session);
         UserInfo userInfo = userInfoService.selectUserInfoByID(id);
         mmap.put("userInfo",userInfo);
-        return "/menu/profile/resetPwd";
+        return "menu/profile/resetPwd";
 
     }
     @RequestMapping("/resetPwd")
@@ -72,6 +74,7 @@ public class ProfileController extends BaseController {
         }
         return true;
     }
+
     @GetMapping("checkEmail")
     @ResponseBody
     public boolean checkEmail(String email,HttpSession session){
@@ -82,14 +85,16 @@ public class ProfileController extends BaseController {
         }
         return true;
     }
+
     @GetMapping("/editInfo")
     public String editInfo(HttpSession session,ModelMap mmap){
         int userId = userInfoService.selectIdByPhoneNumber(session);
         UserInfo userInfo = userInfoService.selectUserInfoByID(userId);
         mmap.put("userInfo",userInfo);
-        return "/menu/profile/edit_info";
+        return "menu/profile/edit_info";
 
     }
+
     @RequestMapping("/editInfo")
     @ResponseBody
     public AjaxResult editInfo(HttpSession session,String city,String userName,String email,String birthday, String hobby, String sex){
@@ -118,8 +123,9 @@ public class ProfileController extends BaseController {
         int id = userInfoService.selectIdByPhoneNumber(session);
         UserInfo userInfo = userInfoService.selectUserInfoByID(id);
         mmap.put("userInfo",userInfo);
-        return "/menu/profile/avatar";
+        return "menu/profile/avatar";
     }
+
     @RequestMapping("/updateAvatar")
     @ResponseBody
     public AjaxResult updateAvatar(HttpSession session,@RequestParam("avatarfile")MultipartFile file){
@@ -139,12 +145,13 @@ public class ProfileController extends BaseController {
             return error(e.getMessage());
         }
     }
+
     @RequestMapping("/profile")
     public String profile(HttpSession session,ModelMap mmap){
        int id = userInfoService.selectIdByPhoneNumber(session);
        UserInfo userInfo = userInfoService.selectUserInfoByID(id);
        UsetInfoJudge.userInfoJudge(userInfo);
        mmap.put("userInfo",userInfo);
-       return "/menu/profile";
+       return "menu/profile";
     }
 }

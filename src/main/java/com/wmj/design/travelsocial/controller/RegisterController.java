@@ -28,6 +28,7 @@ import java.util.Map;
 public class RegisterController {
     @Autowired
     UserInfoService userInfoService;
+
     @GetMapping("/register")
     public String registerPage(){
         return "register";

@@ -36,7 +36,7 @@
                             <div class="col-sm-4">
                                 <div class="text-center">
                                     <!--<img alt="image" class="img-circle m-t-xs img-responsive" th:src="@{img/profile.jpg}">-->
-                                    <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${userInfo.avatar} == null) ? @{/img/profile_1.jpg} : @{/profile/avatar/} + ${userInfo.avatar}">
+                                    <img alt="image" class="img-circle m-t-xs img-responsive" th:src="(${userInfo.avatar} == null) ? @{img/profile_1.jpg} : @{profile/avatar/} + ${userInfo.avatar}">
                                 </div>
                             </div>
                             <div class="col-sm-8">

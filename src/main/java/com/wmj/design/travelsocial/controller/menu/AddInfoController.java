@@ -20,16 +20,13 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class AddInfoController extends BaseController {
+
     @Autowired
     UserInfoService userInfoService;
+
     @GetMapping("/add_info")
     public String addInfo(){
-        return  "/menu/add_info";
-    }
-
-    @GetMapping("/Demo")
-    public String demo(){
-        return "Demo";
+        return  "menu/add_info";
     }
 
     @RequestMapping("/add_info")
@@ -59,5 +56,10 @@ public class AddInfoController extends BaseController {
             msg = "fail";
             return msg;
         }
+    }
+
+    @GetMapping("/Demo")
+    public String demo(){
+        return "Demo";
     }
 }

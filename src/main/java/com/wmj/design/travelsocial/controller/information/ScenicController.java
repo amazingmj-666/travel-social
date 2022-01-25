@@ -16,19 +16,21 @@ import java.util.List;
 
 @Controller
 public class ScenicController {
+
     @Autowired
     ScenicService scenicService;
     @Autowired
     ScenicImageService scenicImageService;
+
     @GetMapping("/scenic")
     public String scenic(ModelMap mmap){
         try{
             List<Scenic> scenicList = scenicService.selectScenicByRandom();
             mmap.put("scenicList",scenicList);
-            return "/information/scenic/scenic";
+            return "information/scenic/scenic";
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
     @GetMapping("/detailed_scenic")
@@ -38,17 +40,17 @@ public class ScenicController {
             Scenic scenic = scenicService.selectScenicById(scenicId);
             mmap.put("scenicImageList",scenicImageList);
             mmap.put("scenic",scenic);
-            return "/information/scenic/detailed_scenic";
+            return "information/scenic/detailed_scenic";
         }catch (Exception e){
             e.printStackTrace();
-            return "/fail/system_error";
+            return "fail/system_error";
         }
     }
     @GetMapping("search_scenic_result")
     public String searchScenicResult(HttpSession session,ModelMap mmap){
         List<Scenic> scenicList = (List<Scenic>) session.getAttribute("scenicList");
         mmap.put("scenicList",scenicList);
-        return "/information/scenic/search_scenic_result";
+        return "information/scenic/search_scenic_result";
      }
 
     @RequestMapping("search_scenic")

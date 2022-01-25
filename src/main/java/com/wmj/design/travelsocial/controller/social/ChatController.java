@@ -23,10 +23,12 @@ import java.util.List;
  */
 @Controller
 public class ChatController {
+
     @Autowired
     UserInfoService userInfoService;
     @Autowired
     FriendService friendService;
+
     @GetMapping("/chat_view")
     public String friendList(HttpSession session, ModelMap mmap){
         int beAddId;
@@ -35,7 +37,7 @@ public class ChatController {
         List<UserInfo> userList = new ArrayList();
         List<Friend> friendList = friendService.selectFriendList(userId);
         if (friendList.isEmpty()){
-            return "/fail/no_friend";
+            return "fail/no_friend";
         }else{
             for (int i =0;i<friendList.size();i++){
                 if(friendList.get(i).getApplicationId() == userId ){
@@ -51,7 +53,7 @@ public class ChatController {
                 }
             }
             mmap.put("userList",userList);
-            return "/social/chat/chat_view";
+            return "social/chat/chat_view";
         }
     }
     @RequestMapping("/change_view")
@@ -62,7 +64,7 @@ public class ChatController {
         List<UserInfo> userList = new ArrayList();
         List<Friend> friendList = friendService.selectFriendList(id);
         if (friendList.isEmpty()){
-            return "/fail/no_friend";
+            return "fail/no_friend";
         }else{
             for (int i =0;i<friendList.size();i++){
                 if(friendList.get(i).getApplicationId() == id ){
@@ -83,7 +85,7 @@ public class ChatController {
             mmap.put("userList",userList);
             mmap.put("userInfo1",userInfo1);
             mmap.put("userInfo2",userInfo2);
-            return "/social/chat/friend_chat_view";
+            return "social/chat/friend_chat_view";
         }
     }
 }
